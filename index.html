@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShapeHouse — Treine em Casa</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: calc(100vh - var(--navbar-h));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 60px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 60px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,76,246,0.12);
+      border: 1px solid rgba(0,76,246,0.3);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease 0.1s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease 0.2s forwards;
+    }
+
+    .hero-title .blue { color: var(--blue); }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--white);
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: var(--white-muted);
+      line-height: 1.7;
+      max-width: 460px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease 0.3s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease 0.4s forwards;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 48px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease 0.5s forwards;
+    }
+
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 12px;
+      color: var(--white-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      height: 540px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.3s forwards;
+    }
+
+    .hero-bg-shape {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,76,246,0.15) 0%, transparent 60%);
+      border-radius: 32px;
+      border: 1px solid rgba(0,76,246,0.2);
+    }
+
+    .hero-center-circle {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(0,76,246,0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+    }
+
+    .hero-exercise-card {
+      position: absolute;
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      min-width: 160px;
+    }
+
+    .hero-exercise-card.card-1 { top: 40px; right: 20px; }
+    .hero-exercise-card.card-2 { bottom: 100px; right: 20px; }
+    .hero-exercise-card.card-3 { bottom: 40px; left: 20px; }
+    .hero-exercise-card.card-4 { top: 80px; left: 20px; }
+
+    .hec-icon { font-size: 24px; margin-bottom: 6px; }
+    .hec-name { font-size: 13px; font-weight: 600; }
+    .hec-reps { font-size: 11px; color: var(--white-muted); }
+
+    .hero-line {
+      position: absolute;
+      width: 80px; height: 2px;
+      background: linear-gradient(90deg, var(--blue), transparent);
+      top: 50%; left: 50%;
+    }
+
+    /* ── BENEFITS ── */
+    .benefits {
+      padding: 80px 40px;
+      background: var(--black-soft);
+      border-top: 1px solid var(--black-border);
+      border-bottom: 1px solid var(--black-border);
+    }
+
+    .benefits-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .benefits-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      gap: 24px;
+    }
+
+    .benefit-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .benefit-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--blue);
+      transform: scaleX(0);
+      transition: var(--transition);
+      transform-origin: left;
+    }
+
+    .benefit-card:hover::before { transform: scaleX(1); }
+    .benefit-card:hover {
+      border-color: rgba(0,76,246,0.3);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-blue);
+    }
+
+    .benefit-icon {
+      width: 52px; height: 52px;
+      background: rgba(0,76,246,0.1);
+      border: 1px solid rgba(0,76,246,0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .benefit-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .benefit-desc {
+      color: var(--white-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-number {
+      font-family: var(--font-display);
+      font-size: clamp(80px, 12vw, 160px);
+      font-weight: 900;
+      line-height: 1;
+      -webkit-text-stroke: 2px rgba(0,76,246,0.3);
+      color: transparent;
+      margin-bottom: -20px;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-big-text {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .about-features {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: var(--white-soft);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .about-feature-dot {
+      width: 8px; height: 8px;
+      background: var(--blue);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── EXERCISES PREVIEW ── */
+    .exercises-preview {
+      background: var(--black-soft);
+      border-top: 1px solid var(--black-border);
+      padding: 80px 40px;
+    }
+
+    .exercises-preview-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .exercise-mini-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: var(--transition);
+    }
+
+    .exercise-mini-card:hover {
+      border-color: rgba(0,76,246,0.4);
+      background: rgba(0,76,246,0.05);
+    }
+
+    .emc-icon {
+      width: 48px; height: 48px;
+      background: rgba(0,76,246,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .emc-name {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .emc-muscles {
+      font-size: 12px;
+      color: var(--white-muted);
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .cta-inner {
+      background: var(--blue);
+      border-radius: var(--radius-lg);
+      padding: 64px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-inner::before {
+      content: 'SHAPE';
+      position: absolute;
+      right: -20px; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: 160px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.05);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.05;
+    }
+
+    .cta-sub {
+      font-size: 15px;
+      opacity: 0.8;
+      margin-top: 8px;
+    }
+
+    .cta-inner .btn-outline {
+      border-color: rgba(255,255,255,0.6);
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    .cta-inner .btn-outline:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { height: 320px; }
+      .about { grid-template-columns: 1fr; gap: 40px; }
+      .benefits { padding: 60px 24px; }
+      .cta-inner { flex-direction: column; text-align: center; padding: 48px 32px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 40px 20px; }
+      .hero-title { letter-spacing: -1px; }
+      .benefits-header { flex-direction: column; align-items: flex-start; }
+      .hero-stats { gap: 24px; }
+      .cta-banner, .exercises-preview, .about { padding: 48px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">🏠</div>
+    <div class="nav-logo-text">Shape<span>House</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" data-nav="home" class="active">Home</a>
+    <a href="pages/exercicios.html">Exercícios</a>
+    <a href="pages/cronograma.html">Cronograma</a>
+    <a href="pages/perfil.html">Perfil</a>
+    <a href="pages/cadastro.html" class="nav-cta">Começar</a>
+  </div>
+  <div class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+  <a href="index.html" data-nav="home">🏠 Home</a>
+  <a href="pages/exercicios.html">💪 Exercícios</a>
+  <a href="pages/cronograma.html">📅 Cronograma</a>
+  <a href="pages/perfil.html">👤 Perfil</a>
+  <a href="pages/cadastro.html" style="color:var(--blue);font-weight:700;">→ Começar Agora</a>
+</div>
+
+<div class="page-wrapper">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">🏆 Calistenia em Casa</div>
+      <h1 class="hero-title">
+        <span class="blue">Treine</span><br>
+        em Casa.<br>
+        <span class="outline">Shape</span><br>
+        seu Corpo.
+      </h1>
+      <p class="hero-subtitle">
+        Use apenas o peso do seu próprio corpo para transformar seu físico. 
+        Cronogramas personalizados, sem academia, sem equipamentos.
+      </p>
+      <div class="hero-actions">
+        <a href="pages/cadastro.html" class="btn btn-primary btn-lg">
+          ⚡ Começar Treino
+        </a>
+        <a href="pages/exercicios.html" class="btn btn-ghost btn-lg">
+          Ver Exercícios
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">7</div>
+          <div class="hero-stat-label">Dias de treino</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">0</div>
+          <div class="hero-stat-label">Equipamentos</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">∞</div>
+          <div class="hero-stat-label">Evolução</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-bg-shape"></div>
+      <div class="hero-center-circle">🏋️</div>
+
+      <div class="hero-exercise-card card-1">
+        <div class="hec-icon">💪</div>
+        <div class="hec-name">Flexão</div>
+        <div class="hec-reps">3 × 15 reps</div>
+      </div>
+      <div class="hero-exercise-card card-2">
+        <div class="hec-icon">🦵</div>
+        <div class="hec-name">Agachamento</div>
+        <div class="hec-reps">3 × 20 reps</div>
+      </div>
+      <div class="hero-exercise-card card-3">
+        <div class="hec-icon">🧱</div>
+        <div class="hec-name">Prancha</div>
+        <div class="hec-reps">3 × 40 seg</div>
+      </div>
+      <div class="hero-exercise-card card-4">
+        <div class="hec-icon">⚡</div>
+        <div class="hec-name">Burpee</div>
+        <div class="hec-reps">3 × 10 reps</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- BENEFITS -->
+  <section class="benefits">
+    <div class="benefits-inner">
+      <div class="benefits-header">
+        <div>
+          <div class="section-tag">Por que ShapeHouse</div>
+          <h2 class="section-title">Tudo que você<br>precisa para <span>evoluir</span></h2>
+        </div>
+        <a href="pages/cadastro.html" class="btn btn-outline">Ver Planos →</a>
+      </div>
+      <div class="grid-4">
+        <div class="benefit-card animate-fade-up-delay-1">
+          <div class="benefit-icon">🏠</div>
+          <div class="benefit-title">Treine em Casa</div>
+          <p class="benefit-desc">Sem academia, sem deslocamento. Treine onde e quando quiser com total autonomia.</p>
+        </div>
+        <div class="benefit-card animate-fade-up-delay-2">
+          <div class="benefit-icon">🚫</div>
+          <div class="benefit-title">Sem Equipamentos</div>
+          <p class="benefit-desc">O único equipamento necessário é o seu próprio corpo. Simples e eficiente.</p>
+        </div>
+        <div class="benefit-card animate-fade-up-delay-3">
+          <div class="benefit-icon">📅</div>
+          <div class="benefit-title">Cronograma Inteligente</div>
+          <p class="benefit-desc">Treinos gerados automaticamente com base no seu perfil físico e objetivos.</p>
+        </div>
+        <div class="benefit-card animate-fade-up-delay-4">
+          <div class="benefit-icon">📊</div>
+          <div class="benefit-title">Acompanhe sua Evolução</div>
+          <p class="benefit-desc">IMC, histórico de treinos e progresso visual para manter você motivado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div>
+      <div class="about-number">01</div>
+      <div class="section-tag">Sobre o ShapeHouse</div>
+      <h2 class="about-big-text">
+        O que é<br><span style="color:var(--blue)">Shape</span><br>House?
+      </h2>
+      <p class="section-subtitle" style="margin-top:20px">
+        ShapeHouse é uma plataforma de treinamento em casa baseada em calistenia — 
+        a arte de usar o peso do próprio corpo para construir força, resistência e mobilidade.
+      </p>
+      <div class="about-features">
+        <div class="about-feature"><div class="about-feature-dot"></div>Análise de IMC personalizada</div>
+        <div class="about-feature"><div class="about-feature-dot"></div>Cronograma adaptado ao seu nível</div>
+        <div class="about-feature"><div class="about-feature-dot"></div>Biblioteca completa de exercícios</div>
+        <div class="about-feature"><div class="about-feature-dot"></div>Temporizador e contador integrados</div>
+        <div class="about-feature"><div class="about-feature-dot"></div>Histórico de treinos salvo localmente</div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div style="background:var(--black-card); border:1px solid var(--black-border); border-radius:var(--radius-lg); padding:32px; text-align:center;">
+        <div style="font-size:80px; margin-bottom:16px;">🏋️</div>
+        <div style="font-family:var(--font-display); font-size:32px; font-weight:900; text-transform:uppercase; margin-bottom:8px; color:var(--blue);">Calistenia</div>
+        <p style="color:var(--white-muted); font-size:14px; line-height:1.7;">
+          Do grego "kalos" (belo) + "sthenos" (força). A forma mais pura e eficiente de treinar.
+        </p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px;">
+          <div style="background:rgba(0,76,246,0.1); border:1px solid rgba(0,76,246,0.2); border-radius:12px; padding:16px;">
+            <div style="font-family:var(--font-display); font-size:28px; font-weight:900; color:var(--blue);">3</div>
+            <div style="font-size:12px; color:var(--white-muted);">Níveis</div>
+          </div>
+          <div style="background:rgba(0,76,246,0.1); border:1px solid rgba(0,76,246,0.2); border-radius:12px; padding:16px;">
+            <div style="font-family:var(--font-display); font-size:28px; font-weight:900; color:var(--blue);">14+</div>
+            <div style="font-size:12px; color:var(--white-muted);">Exercícios</div>
+          </div>
+          <div style="background:rgba(0,76,246,0.1); border:1px solid rgba(0,76,246,0.2); border-radius:12px; padding:16px;">
+            <div style="font-family:var(--font-display); font-size:28px; font-weight:900; color:var(--blue);">7</div>
+            <div style="font-size:12px; color:var(--white-muted);">Dias/semana</div>
+          </div>
+          <div style="background:rgba(0,76,246,0.1); border:1px solid rgba(0,76,246,0.2); border-radius:12px; padding:16px;">
+            <div style="font-family:var(--font-display); font-size:28px; font-weight:900; color:var(--blue);">∞</div>
+            <div style="font-size:12px; color:var(--white-muted);">Resultados</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXERCISES PREVIEW -->
+  <section class="exercises-preview">
+    <div class="exercises-preview-inner">
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:40px; gap:20px; flex-wrap:wrap;">
+        <div>
+          <div class="section-tag">Biblioteca</div>
+          <h2 class="section-title">Exercícios <span>principais</span></h2>
+        </div>
+        <a href="pages/exercicios.html" class="btn btn-outline">Ver todos →</a>
+      </div>
+      <div class="grid-3" id="exercises-preview-grid">
+        <!-- Loaded by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="cta-inner">
+      <div>
+        <div class="cta-title">Pronto para<br>transformar seu shape?</div>
+        <div class="cta-sub">Cadastre-se em 30 segundos e comece hoje.</div>
+      </div>
+      <a href="pages/cadastro.html" class="btn btn-outline btn-lg">
+        Começar Agora →
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">Shape<span>House</span></div>
+    <p class="footer-text">Treine em casa. Use seu próprio corpo. Transforme seu shape. 🏠</p>
+    <p class="footer-text" style="margin-top:8px; font-size:12px;">
+      <a href="pages/cadastro.html" style="color:var(--blue)">Cadastro</a> · 
+      <a href="pages/exercicios.html" style="color:var(--blue)">Exercícios</a> · 
+      <a href="pages/cronograma.html" style="color:var(--blue)">Cronograma</a> · 
+      <a href="pages/perfil.html" style="color:var(--blue)">Perfil</a>
+    </p>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+<script>
+  // Render exercise preview cards
+  const previewExercicios = [
+    { icon:'💪', nome:'Flexão (Push-up)',   muscles:'Peito, Tríceps, Ombros', reps:'10–25 reps' },
+    { icon:'🦵', nome:'Agachamento (Squat)', muscles:'Quadríceps, Glúteos',  reps:'15–35 reps' },
+    { icon:'🧱', nome:'Prancha (Plank)',      muscles:'Core, Abdômen',        reps:'20–60 seg' },
+    { icon:'⚡', nome:'Burpee',              muscles:'Corpo Todo, Cardio',    reps:'5–20 reps' },
+    { icon:'🏃', nome:'Polichinelo',         muscles:'Cardio, Corpo Todo',    reps:'20–50 reps' },
+    { icon:'🔥', nome:'Abdominal Crunch',    muscles:'Abdômen Superior',      reps:'10–30 reps' },
+  ];
+
+  const grid = document.getElementById('exercises-preview-grid');
+  previewExercicios.forEach((ex, i) => {
+    const card = document.createElement('div');
+    card.className = 'exercise-mini-card animate-fade-up-delay-' + Math.min(i+1, 5);
+    card.innerHTML = `
+      <div class="emc-icon">${ex.icon}</div>
+      <div>
+        <div class="emc-name">${ex.nome}</div>
+        <div class="emc-muscles">${ex.muscles}</div>
+        <div style="font-size:12px; color:var(--blue); font-weight:600; margin-top:4px">${ex.reps}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Check if user already registered
+  const user = UserDB.getUser();
+  if (user) {
+    document.querySelector('.nav-cta').textContent = `Olá, ${user.nome.split(' ')[0]}`;
+    document.querySelector('.nav-cta').href = 'pages/perfil.html';
+  }
+</script>
+</body>
+</html>
